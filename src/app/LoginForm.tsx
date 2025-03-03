@@ -19,7 +19,7 @@ export default function LoginForm() {
       return;
     }
 
-    if (username === 'user' && password === 'password123') {
+    if (username === 'tups' && password === 'tupsgans') {
       alert('Login berhasil!');
       setError('');
     } else {
@@ -32,7 +32,7 @@ export default function LoginForm() {
       {/* Kiri - Form Section */}
       <div className="w-1/2 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
-          <h2 className="text-2xl font-bold text-black mb-6 text-center">Login Akun</h2>
+          <h2 className="text-5xl font-bold bg-gradient-to-br from-teal-300 to-cyan-600 bg-clip-text text-transparent mb-6 leading-tight">Login</h2>
 
           {error && (
             <div className="text-red-600 bg-red-100 p-2 rounded text-center mb-4">
