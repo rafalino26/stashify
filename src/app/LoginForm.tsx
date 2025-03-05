@@ -15,15 +15,15 @@ export default function LoginForm() {
     e.preventDefault();
 
     if (!username || !password) {
-      setError('Username dan password wajib diisi');
+      setError('Username and password are required');
       return;
     }
 
     if (username === 'tups' && password === 'tupsgans') {
-      alert('Login berhasil!');
+      alert('Login Success!');
       setError('');
     } else {
-      setError('Username atau password salah');
+      setError('Inccorect Username atau password');
     }
   };
 
@@ -74,7 +74,7 @@ export default function LoginForm() {
             {/* Login Button */}
             <button
               type="submit"
-              className="w-full bg-gradient-to-br from-teal-400 to-cyan-500 text-white py-2 rounded-full hover:bg-blue-700"
+              className="w-60 ml-25 bg-gradient-to-br from-teal-400 to-cyan-500 text-white py-2 rounded-full hover:bg-blue-700"
             >
               Login
             </button>
@@ -82,8 +82,8 @@ export default function LoginForm() {
 
           {/* Sign Up Link */}
           <p className="mt-4 text-center text-sm text-gray-700">
-            Belum punya akun?{' '}
-            <Link href="/register" className="text-teal-500 hover:underline">Daftar</Link>
+            Don't have an account?{' '}
+            <Link href="/register" className="text-teal-500 hover:underline">Register</Link>
           </p>
         </div>
       </div>

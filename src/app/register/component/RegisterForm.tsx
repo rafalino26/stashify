@@ -35,12 +35,13 @@ export default function RegisterForm() {
       confirmPassword: "",
     };
 
-    if (!firstName) newErrors.firstName = "First name tidak boleh kosong.";
-    if (!lastName) newErrors.lastName = "Last name tidak boleh kosong.";
-    if (!username) newErrors.username = "Username atau company name wajib diisi.";
-    if (!emailOrPhone) newErrors.emailOrPhone = "Email atau nomor telepon wajib diisi.";
-    if (password.length < 8) newErrors.password = "Password minimal 8 karakter.";
-    if (password !== confirmPassword) newErrors.confirmPassword = "Konfirmasi password tidak sesuai.";
+    if (!firstName) newErrors.firstName = "First name is required.";
+    if (!lastName) newErrors.lastName = "Last name is required.";
+    if (!username) newErrors.username = "Username or company name is required.";
+    if (!emailOrPhone) newErrors.emailOrPhone = "Email or phone number is required.";
+    if (password.length < 8) newErrors.password = "Password must be at least 8 characters.";
+    if (password !== confirmPassword) newErrors.confirmPassword = "Password confirmation does not match.";
+    
 
     setErrors(newErrors);
 
@@ -53,128 +54,129 @@ export default function RegisterForm() {
   return (
     <div className="min-h-screen flex bg-white">
       {/* Kiri - Form Section */}
-      <div className="w-1/2 flex items-center justify-center p-8">
+      <div className="w-1/2 flex items-center justify-center p-8 pl-24">
         <div className="w-full max-w-md">
-        <h2 className="text-5xl font-bold bg-gradient-to-br from-teal-300 to-cyan-600 bg-clip-text text-transparent mb-6">
-  Daftar
+        <h2 className="text-5xl font-bold bg-gradient-to-br from-teal-300 to-cyan-600 bg-clip-text text-transparent mb-6 leading-tight">
+  Register
 </h2>
 
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+<form onSubmit={handleSubmit} className="space-y-4">
 
-            {/* First Name & Last Name (Side by Side) */}
-            <div className="flex space-x-4">
-            {/* First Name */}
-            <div className="w-1/2">
-                <label className="block text-sm text-gray-600 mb-1">First Name</label>
-                <input
-                type="text"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                className={`w-full p-2 border rounded-md focus:ring-2 text-black focus:outline-none ${errors.firstName ? "ring-red-500" : "ring-blue-300"}`}
-                placeholder="Masukkan First Name"
-                />
-                {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>}
-            </div>
+{/* First Name & Last Name (Side by Side) */}
+<div className="flex space-x-5">
+    {/* First Name */}
+    <div className="w-44">
+        <label className="block text-sm text-gray-600 mb-1">First Name</label>
+        <input
+            type="text"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            className={`w-full p-1 border rounded-md focus:ring-2 placeholder:text-sm text-black focus:outline-none ${errors.firstName ? "ring-red-500" : "ring-blue-300"}`}
+            placeholder="Enter First Name"
+        />
+        {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>}
+    </div>
 
-            {/* Last Name */}
-            <div className="w-1/2">
-                <label className="block text-sm text-gray-600 mb-1">Last Name</label>
-                <input
-                type="text"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                className={`w-full p-2 border rounded-md focus:ring-2 text-black focus:outline-none ${errors.lastName ? "ring-red-500" : "ring-blue-300"}`}
-                placeholder="Masukkan Last Name"
-                />
-                {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>}
-            </div>
-            </div>
+    {/* Last Name */}
+    <div className="w-44">
+        <label className="block text-sm text-gray-600 mb-1">Last Name</label>
+        <input
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            className={`w-full p-1 border rounded-md focus:ring-2 placeholder:text-sm text-black focus:outline-none ${errors.lastName ? "ring-red-500" : "ring-blue-300"}`}
+            placeholder="Enter Last Name"
+        />
+        {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>}
+    </div>
+</div>
 
-            {/* Username/Company Name */}
-            <div>
-              <label className="block text-sm text-gray-600 mb-1">Username/Company Name</label>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className={`w-full p-2 border rounded-md focus:ring-2 text-black focus:outline-none ${errors.username ? "ring-red-500" : "ring-blue-300"}`}
-                placeholder="Masukkan Username atau Company Name"
-              />
-              {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
-            </div>
 
-            {/* Email/Phone */}
-            <div>
-              <label className="block text-sm text-gray-600 mb-1">E-mail/Phone Number</label>
-              <input
-                type="text"
-                value={emailOrPhone}
-                onChange={(e) => setEmailOrPhone(e.target.value)}
-                className={`w-full p-2 border rounded-md focus:ring-2 text-black focus:outline-none ${errors.emailOrPhone ? "ring-red-500" : "ring-blue-300"}`}
-                placeholder="Masukkan E-mail atau Nomor Telepon"
-              />
-              {errors.emailOrPhone && <p className="text-red-500 text-sm mt-1">{errors.emailOrPhone}</p>}
-            </div>
+{/* Username/Company Name */}
+<div className="w-10/12">
+    <label className="block text-sm text-gray-600 mb-1">Username/Company Name</label>
+    <input
+        type="text"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        className={`w-full p-1 border rounded-md focus:ring-2 placeholder:text-sm text-black focus:outline-none ${errors.username ? "ring-red-500" : "ring-blue-300"}`}
+        placeholder="Enter Username or Company Name"
+    />
+    {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
+</div>
 
-            {/* Password */}
-            <div>
-              <label className="block text-sm text-gray-600 mb-1">Password</label>
-              <div className="relative">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className={`w-full p-2 pr-10 border rounded-md focus:ring-2 text-black focus:outline-none ${errors.password ? "ring-red-500" : "ring-blue-300"}`}
-                  placeholder="Masukkan password"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute top-1/2 transform -translate-y-1/2 right-3 text-gray-500"
-                >
-                  {showPassword ? <FaEye /> : <FaEyeSlash />}
-                </button>
-              </div>
-              {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
-            </div>
+{/* Email/Phone */}
+<div className="w-10/12">
+    <label className="block text-sm text-gray-600 mb-1">Email/Phone Number</label>
+    <input
+        type="text"
+        value={emailOrPhone}
+        onChange={(e) => setEmailOrPhone(e.target.value)}
+        className={`w-full p-1 border rounded-md focus:ring-2 placeholder:text-sm text-black focus:outline-none ${errors.emailOrPhone ? "ring-red-500" : "ring-blue-300"}`}
+        placeholder="Enter Email or Phone Number"
+    />
+    {errors.emailOrPhone && <p className="text-red-500 text-sm mt-1">{errors.emailOrPhone}</p>}
+</div>
 
-            {/* Confirm Password */}
-            <div>
-              <label className="block text-sm text-gray-600 mb-1">Confirm Password</label>
-              <div className="relative">
-                <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className={`w-full p-2 pr-10 border rounded-md focus:ring-2 text-black focus:outline-none ${errors.confirmPassword ? "ring-red-500" : "ring-blue-300"}`}
-                  placeholder="Konfirmasi password"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute top-1/2 transform -translate-y-1/2 right-3 text-gray-500"
-                >
-                  {showConfirmPassword ? <FaEye/> : <FaEyeSlash />}
-                </button>
-              </div>
-              {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
-            </div>
+{/* Password */}
+<div className="w-10/12">
+    <label className="block text-sm text-gray-600 mb-1">Password</label>
+    <div className="relative">
+        <input
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className={`w-full p-1 pr-10 border rounded-md focus:ring-2 placeholder:text-sm text-black focus:outline-none ${errors.password ? "ring-red-500" : "ring-blue-300"}`}
+            placeholder="Enter Password"
+        />
+        <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute top-1/2 transform -translate-y-1/2 right-3 text-gray-500"
+        >
+            {showPassword ? <FaEye /> : <FaEyeSlash />}
+        </button>
+    </div>
+    {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+</div>
 
-            {/* Register Button */}
-            <button
-              type="submit"
-              className="w-full bg-gradient-to-br from-teal-400 to-cyan-500 text-white py-2 mt-4 rounded-full hover:bg-blue-700"
-            >
-              Daftar
-            </button>
+{/* Confirm Password */}
+<div className="w-10/12">
+    <label className="block text-sm text-gray-600 mb-1">Confirm Password</label>
+    <div className="relative">
+        <input
+            type={showConfirmPassword ? "text" : "password"}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className={`w-full p-1 pr-10 border rounded-md focus:ring-2 placeholder:text-sm text-black focus:outline-none ${errors.confirmPassword ? "ring-red-500" : "ring-blue-300"}`}
+            placeholder="Confirm Password"
+        />
+        <button
+            type="button"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            className="absolute top-1/2 transform -translate-y-1/2 right-3 text-gray-500"
+        >
+            {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
+        </button>
+    </div>
+    {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
+</div>
 
-            {/* Already Have Account */}
-            <p className="mt-4 text-center text-sm text-gray-700">
-              Sudah punya akun?{" "}
-              <Link href="/" className="text-teal-500 hover:underline">Masuk</Link>
-            </p>
-          </form>
+{/* Register Button */}
+<button
+    type="submit"
+    className="w-52 ml-21 bg-gradient-to-br from-teal-400 to-cyan-500 text-white py-2 mt-4 rounded-full hover:bg-blue-700"
+>
+    Register
+</button>
+
+{/* Already Have Account */}
+<p className="-mt-1 mr-18 text-center text-sm text-gray-700">
+    Already have an account?{" "}
+    <Link href="/" className="text-teal-500 hover:underline">Login</Link>
+</p>
+</form>
         </div>
       </div>
 
