@@ -4,12 +4,15 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { FaUser, FaLock } from 'react-icons/fa';
 import { IoEyeOff, IoEye } from 'react-icons/io5';
+import { useRouter } from 'next/navigation';
 
 export default function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+
+  const router = useRouter(); // Ini penting biar bisa navigate manual
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,17 +25,17 @@ export default function LoginForm() {
     if (username === 'tups' && password === 'tupsgans') {
       alert('Login Success!');
       setError('');
+      router.push('/dashboard/home'); // Pindah halaman setelah login sukses
     } else {
-      setError('Inccorect Username atau password');
+      setError('Incorrect Username atau Password');
     }
   };
 
   return (
     <div className="min-h-screen flex bg-white">
-      {/* Kiri - Form Section */}
       <div className="w-1/2 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
-          <h2 className="text-5xl font-bold bg-gradient-to-br from-teal-300 to-cyan-600 bg-clip-text text-transparent mb-6 leading-tight">Login</h2>
+          <h2 className="text-5xl font-bold bg-black bg-clip-text text-transparent mb-6 leading-tight">Login</h2>
 
           {error && (
             <div className="text-red-600 bg-red-100 p-2 rounded text-center mb-4">
@@ -41,7 +44,6 @@ export default function LoginForm() {
           )}
 
           <form onSubmit={handleLogin} className="space-y-4">
-            {/* Username Field */}
             <div className="relative">
               <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
               <input
@@ -53,12 +55,11 @@ export default function LoginForm() {
               />
             </div>
 
-            {/* Password Field */}
-            <div className="relative ">
+            <div className="relative">
               <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
               <input
                 type={showPassword ? "text" : "password"}
-                className="w-full pl-10 pr-10 py-2  focus:outline-none border rounded-md bg-white placeholder-gray-500 text-black"
+                className="w-full pl-10 pr-10 py-2 focus:outline-none border rounded-md bg-white placeholder-gray-500 text-black"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
@@ -71,30 +72,32 @@ export default function LoginForm() {
               </span>
             </div>
 
-            {/* Login Button */}
             <button
               type="submit"
-              className="w-60 ml-25 bg-gradient-to-br from-teal-400 to-cyan-500 text-white py-2 rounded-full hover:bg-blue-700"
+              className="w-60 ml-25 bg-black text-white py-2 rounded-full hover:bg-gray-700"
             >
               Login
             </button>
           </form>
 
-          {/* Sign Up Link */}
           <p className="mt-4 text-center text-sm text-gray-700">
             Don't have an account?{' '}
-            <Link href="/register" className="text-teal-500 hover:underline">Register</Link>
+            <Link href="/register" className="text-black hover:underline">Register</Link>
           </p>
         </div>
       </div>
 
-      {/* Kanan - Profile & Title Section */}
-      <div className="w-1/2 flex flex-col items-center justify-center bg-gradient-to-br from-teal-400 to-cyan-500">
-        {/* Profile Circle */}
-        <div className="w-28 h-28 bg-black rounded-full mb-4"></div>
-
-        {/* Title */}
-        <h1 className="text-4xl font-bold text-black">STASHIFY</h1>
+      <div className="w-1/2 relative flex items-center justify-center">
+        <img 
+          src="bekbek.jpg" 
+          alt="Background Image" 
+          className="w-full h-[100vh] object-cover"
+        />
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <div className="w-28 h-28 bg-black rounded-full mb-4"></div>
+          <h1 className="text-4xl font-light text-white">S T A S H I F Y</h1>
+          <p className="font-extralight">Karena tups adalah yang terbaik</p>
+        </div>
       </div>
     </div>
   );

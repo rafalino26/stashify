@@ -56,7 +56,7 @@ export default function RegisterForm() {
       {/* Kiri - Form Section */}
       <div className="w-1/2 flex items-center justify-center p-8 pl-24">
         <div className="w-full max-w-md">
-        <h2 className="text-5xl font-bold bg-gradient-to-br from-teal-300 to-cyan-600 bg-clip-text text-transparent mb-6 leading-tight">
+        <h2 className="text-5xl font-bold bg-black bg-clip-text text-transparent mb-6 leading-tight">
   Register
 </h2>
 
@@ -166,7 +166,7 @@ export default function RegisterForm() {
 {/* Register Button */}
 <button
     type="submit"
-    className="w-52 ml-21 bg-gradient-to-br from-teal-400 to-cyan-500 text-white py-2 mt-4 rounded-full hover:bg-blue-700"
+    className="w-52 ml-21 bg-black text-white py-2 mt-4 rounded-full hover:bg-gray-700"
 >
     Register
 </button>
@@ -174,17 +174,27 @@ export default function RegisterForm() {
 {/* Already Have Account */}
 <p className="-mt-1 mr-18 text-center text-sm text-gray-700">
     Already have an account?{" "}
-    <Link href="/" className="text-teal-500 hover:underline">Login</Link>
+    <Link href="/" className="text-black hover:underline">Login</Link>
 </p>
 </form>
         </div>
       </div>
 
       {/* Kanan - Profile & Title Section */}
-      <div className="w-1/2 flex flex-col items-center justify-center bg-gradient-to-br from-teal-400 to-cyan-500">
+<div className="w-1/2 relative flex items-center justify-center">
+    <img 
+        src="bekbek.jpg" 
+        alt="Background Image" 
+        className="w-full h-[100vh] object-cover"
+    />
+    
+    {/* Overlay untuk bulat hitam + teks */}
+    <div className="absolute inset-0 flex flex-col items-center justify-center">
         <div className="w-28 h-28 bg-black rounded-full mb-4"></div>
-        <h1 className="text-4xl font-bold text-black">STASHIFY</h1>
-      </div>
+        <h1 className="text-4xl font-light text-white">S T A S H I F Y</h1>
+        <p className="font-extralight"> Karena tups adalah yang terbaik</p>
     </div>
+</div>
+</div>
   );
 }
