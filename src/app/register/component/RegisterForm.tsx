@@ -192,7 +192,6 @@ export default function RegisterForm() {
     <div className="absolute inset-0 flex flex-col items-center justify-center">
         <div className="w-28 h-28 bg-black rounded-full mb-4"></div>
         <h1 className="text-4xl font-light text-white">S T A S H I F Y</h1>
-        <p className="font-extralight"> Karena tups adalah yang terbaik</p>
     </div>
 </div>
 </div>
