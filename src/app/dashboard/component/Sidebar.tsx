@@ -66,10 +66,11 @@ export default function Sidebar() {
                             >
                                 {/* Image icon - cek aktif atau tidak */}
                                 <img
-                                    src={isActive ? item.iconActive : item.icon}
+                                    src={isActive || hoveredItem === item.path ? item.iconActive : item.icon}
                                     alt={`${item.label} icon`}
                                     className="w-5 h-5"
                                 />
+
                                 <span>{item.label}</span>
                             </Link>
 
