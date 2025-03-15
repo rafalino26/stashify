@@ -5,29 +5,37 @@ import { useState } from 'react';
 import { FaUser, FaLock } from 'react-icons/fa';
 import { IoEyeOff, IoEye } from 'react-icons/io5';
 import { useRouter } from 'next/navigation';
+import { loginUser } from './services/auth';
 
 export default function LoginForm() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter(); // Ini penting biar bisa navigate manual
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+    setError('');
 
-    if (!username || !password) {
-      setError('Username and password are required');
+    if (!email || !password) {
+      setError('Email and password are required');
+      setLoading(false);
       return;
     }
 
-    if (username === 'stashify' && password === 'stashify') {
+    try {
+      const response = await loginUser(email, password);
+      localStorage.setItem('token', response.token); // Simpan token di localStorage
       alert('Login Success!');
-      setError('');
-      router.push('/dashboard/home'); // Pindah halaman setelah login sukses
-    } else {
-      setError('Incorrect Username atau Password');
+      router.push('/dashboard/home'); // Redirect setelah login sukses
+    } catch (err) {
+      setError((err as unknown as Error).message || 'Login failed');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -49,9 +57,9 @@ export default function LoginForm() {
               <input
                 type="text"
                 className="w-full pl-10 pr-4 py-2 rounded-md focus:outline-none border bg-white placeholder-gray-500 text-black"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Username"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
               />
             </div>
 

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Link from "next/link";
+import { registerUser } from "@/app/services/auth";
 
 export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,6 +15,8 @@ export default function RegisterForm() {
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
   const [errors, setErrors] = useState({
     firstName: "",
@@ -24,8 +27,9 @@ export default function RegisterForm() {
     confirmPassword: "",
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setMessage("");
     const newErrors = {
       firstName: "",
       lastName: "",
@@ -47,9 +51,30 @@ export default function RegisterForm() {
 
     if (Object.values(newErrors).some((err) => err !== "")) return;
 
-    // Handle registrasi di sini (API call atau logika lainnya)
-    console.log({ firstName, lastName, username, emailOrPhone, password });
-  };
+    try {
+        setLoading(true);
+        // Panggil API register
+        const response = await registerUser(firstName, lastName, username, emailOrPhone, password);
+        
+        // Jika berhasil, tampilkan pesan sukses
+        setMessage("Registration successful! Please log in.");
+        console.log("Registration Success:", response);
+  
+        // Reset form setelah berhasil registrasi
+        setFirstName("");
+        setLastName("");
+        setUsername("");
+        setEmailOrPhone("");
+        setPassword("");
+        setConfirmPassword("");
+      } catch (error: any) {
+        // Tampilkan pesan error jika registrasi gagal
+        setMessage(error.message || "Registration failed.");
+        console.error("Registration Error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
   return (
     <div className="min-h-screen flex bg-white">
