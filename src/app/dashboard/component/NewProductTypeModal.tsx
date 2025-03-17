@@ -20,12 +20,13 @@ export default function NewProductTypeModal({
       alert("Please enter a product type");
       return;
     }
+    console.log("Saving new product type:", newType);
     onSave(newType);
     onClose();
   };
 
   return isOpen ? (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-transparent">
       <div className="bg-white p-6 rounded-lg w-80 shadow-lg">
         <h2 className="text-lg font-bold mb-4">New Product Type</h2>
         <input

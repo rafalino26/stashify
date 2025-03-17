@@ -20,25 +20,22 @@ export default function LoginForm() {
     e.preventDefault();
     setLoading(true);
     setError('');
-
+  
     if (!email || !password) {
       setError('Email and password are required');
       setLoading(false);
       return;
     }
-
+  
     try {
-      const response = await loginUser(email, password);
-      localStorage.setItem('token', response.token); // Simpan token di localStorage
-      alert('Login Success!');
-      router.push('/dashboard/home'); // Redirect setelah login sukses
+      await loginUser(email, password);
+      router.push('/dashboard/home'); // Redirect langsung tanpa popup
     } catch (err) {
       setError((err as unknown as Error).message || 'Login failed');
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <div className="min-h-screen flex bg-white">
       <div className="w-1/2 flex items-center justify-center p-8">
@@ -81,11 +78,34 @@ export default function LoginForm() {
             </div>
 
             <button
-              type="submit"
-              className="w-60 ml-25 bg-black text-white py-2 rounded-full hover:bg-gray-700"
-            >
-              Login
-            </button>
+            type="submit"
+            className="w-60 ml-25 bg-black text-white py-2 rounded-full hover:bg-gray-700 flex justify-center items-center disabled:bg-gray-500"
+            disabled={loading} // Tombol dinonaktifkan saat loading
+          >
+            {loading ? (
+              <div className="flex items-center space-x-2">
+                <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24">
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    fill="none"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4l4-4-4-4v4a8 8 0 00-8 8z"
+                  ></path>
+                </svg>
+                <span>Loading...</span>
+              </div>
+            ) : (
+              "Login"
+            )}
+          </button>
           </form>
 
           <p className="mt-4 text-center text-sm text-gray-700">

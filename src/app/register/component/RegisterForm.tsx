@@ -57,7 +57,7 @@ export default function RegisterForm() {
         const response = await registerUser(firstName, lastName, username, emailOrPhone, password);
         
         // Jika berhasil, tampilkan pesan sukses
-        setMessage("Registration successful! Please log in.");
+        setMessage("Registration successful! Please check your email to verify your account.");
         console.log("Registration Success:", response);
   
         // Reset form setelah berhasil registrasi
@@ -188,12 +188,46 @@ export default function RegisterForm() {
     {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
 </div>
 
+{/* Pesan sukses atau error */}
+{message && (
+  <p
+    className={`text-center mt-2 text-sm ${
+      message.includes("successful") ? "text-green-500" : "text-red-500"
+    }`}
+  >
+    {message}
+  </p>
+)}
+
 {/* Register Button */}
 <button
-    type="submit"
-    className="w-52 ml-21 bg-black text-white py-2 mt-4 rounded-full hover:bg-gray-700"
+  type="submit"
+  className="w-52 ml-21 bg-black text-white py-2 mt-4 rounded-full hover:bg-gray-700 flex justify-center items-center disabled:bg-gray-500"
+  disabled={loading} // Tombol dinonaktifkan saat loading
 >
-    Register
+  {loading ? (
+    <div className="flex items-center space-x-2">
+      <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24">
+        <circle
+          className="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          strokeWidth="4"
+          fill="none"
+        ></circle>
+        <path
+          className="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v4l4-4-4-4v4a8 8 0 00-8 8z"
+        ></path>
+      </svg>
+      <span>Loading...</span>
+    </div>
+  ) : (
+    "Register"
+  )}
 </button>
 
 {/* Already Have Account */}

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import NewProductTypeModal from "./NewProductTypeModal";
+import api from "@/app/services/api";
 
 interface NewProductModalProps {
   isOpen: boolean;
@@ -23,73 +24,154 @@ export default function NewProductModal({
   const [price, setPrice] = useState("");
   const [expiredDate, setExpiredDate] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [isProductTypeModalOpen, setIsProductTypeModalOpen] = useState(false);
+  const [description, setDescription] = useState("");
 
-  const handleSave = () => {
+  const resetForm = () => {
+    setProductName("");
+    setProductType("");
+    setPrice("");
+    setExpiredDate("");
+    setQuantity("");
+    setDescription("");
+  };
+  
+  const handleClose = () => {
+    resetForm();
+    onClose();
+  };
+
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const rawValue = e.target.value.replace(/\D/g, ""); // Hanya angka
+    const formattedValue = Number(rawValue).toLocaleString("id-ID"); // Tambah titik ribuan
+    setPrice(formattedValue);
+  };
+
+  const handleSave = async () => {
     if (!productName || !productType || !price || !expiredDate || !quantity) {
       alert("Please fill all fields");
       return;
     }
-    onSave({ productName, productType, price, expiredDate, quantity });
-    onClose();
-  };
 
+    const formattedPrice = Number(price.replace(/\./g, ""));
+
+    const newProduct = {
+      name: productName,
+      product_type: productType,
+      description: description || "",
+      price: formattedPrice,
+      expired_date: expiredDate,
+      quantity: Number(quantity),
+    };
+
+
+    try {
+      setIsLoading(true);
+  
+      const response = await api.post("/stock", newProduct, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      onSave(response.data);
+      resetForm(); 
+      onClose();
+    } catch (error: any) {
+      console.error(error);
+      alert(error.response?.data?.message || "Failed to save product. Please check your authorization.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  
   return isOpen ? (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-6 rounded-lg w-96 shadow-lg">
+    <div className="fixed inset-0 flex items-center justify-center bg-transparent bg-opacity-50">
+      <div className="bg-white p-6 rounded-lg w-[1200px] shadow-lg">
         <h2 className="text-lg font-bold mb-4">New Product</h2>
-        <input
-          type="text"
-          placeholder="Product Name"
-          value={productName}
-          onChange={(e) => setProductName(e.target.value)}
-          className="w-full border p-2 mb-2 rounded"
-        />
-        <div className="flex items-center space-x-2">
-          <select
-            value={productType}
-            onChange={(e) => setProductType(e.target.value)}
-            className="w-full border p-2 rounded"
-          >
-            <option value="">Select Product Type</option>
-            {productTypes.map((type) => (
-              <option key={type} value={type}>{type}</option>
-            ))}
-          </select>
-          <button
-            onClick={() => setIsProductTypeModalOpen(true)}
-            className="bg-blue-500 text-white px-3 py-2 rounded"
-          >
-            +
-          </button>
+
+           <div className="flex flex-wrap gap-3">
+          {/* Product Name */}
+          <div className="w-[calc(19%+1px)] flex flex-col">
+            <label className="text-xs text-gray-600">Product Name</label>
+            <input
+              type="text"
+              value={productName}
+              onChange={(e) => setProductName(e.target.value)}
+              className="border p-1.5 text-sm rounded"
+            />
+          </div>
+
+          {/* Product Type */}
+          <div className="w-[calc(19%+1px)] flex flex-col">
+            <label className="text-xs text-gray-600">Product Type</label>
+            <div className="flex items-center space-x-2">
+              <select
+                value={productType}
+                onChange={(e) => setProductType(e.target.value)}
+                className="w-full border p-1.5 text-sm rounded"
+              >
+                <option value="">Select Product Type</option>
+                {productTypes.map((type) => (
+                  <option key={type} value={type}>{type}</option>
+                ))}
+              </select>
+              <button
+                onClick={() => setIsProductTypeModalOpen(true)}
+                className="bg-blue-500 text-white px-2 py-1 text-sm rounded"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          {/* Price */}
+          <div className="w-[calc(19%+1px)] flex flex-col">
+            <label className="text-xs text-gray-600">Price</label>
+            <input
+              type="text"
+              value={price}
+              onChange={handlePriceChange}
+              className="border p-1.5 text-sm rounded"
+            />
+          </div>
+
+          {/* Expired Date */}
+          <div className="w-[calc(19%+1px)] flex flex-col">
+            <label className="text-xs text-gray-600">Expired Date</label>
+            <input
+              type="date"
+              value={expiredDate}
+              onChange={(e) => setExpiredDate(e.target.value)}
+              className="border p-1.5 text-sm rounded"
+            />
+          </div>
+
+          {/* Quantity */}
+          <div className="w-[calc(19%+1px)] flex flex-col">
+            <label className="text-xs text-gray-600">Quantity</label>
+            <input
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              className="border p-1.5 text-sm rounded"
+            />
+          </div>
         </div>
-        <input
-          type="text"
-          placeholder="Price"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          className="w-full border p-2 mb-2 rounded"
-        />
-        <input
-          type="text"
-          placeholder="Expired Date (dd/mm/yyyy)"
-          value={expiredDate}
-          onChange={(e) => setExpiredDate(e.target.value)}
-          className="w-full border p-2 mb-2 rounded"
-        />
-        <input
-          type="number"
-          placeholder="Quantity"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-          className="w-full border p-2 mb-2 rounded"
-        />
+
+        {/* Tombol Save & Cancel */}
         <div className="flex justify-end space-x-2 mt-4">
-          <button onClick={onClose} className="bg-gray-500 text-white px-4 py-2 rounded">
+          <button onClick={handleClose} className="bg-gray-500 text-white px-4 py-2 rounded">
             Cancel
           </button>
-          <button onClick={handleSave} className="bg-blue-500 text-white px-4 py-2 rounded">
-            Save
+          <button 
+            onClick={handleSave} 
+            className={`px-4 py-2 rounded ${isLoading ? "bg-gray-400" : "bg-blue-500"} text-white`}
+            disabled={isLoading}
+          >
+            {isLoading ? "Saving..." : "Save"}
           </button>
         </div>
       </div>
