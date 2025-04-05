@@ -223,7 +223,7 @@ export default function ProductContent() {
     &#x22EE;
   </button>
   {activeDropdown === item.id && (
-    <div className="absolute right-0 bg-white border shadow-md rounded mt-2">
+    <div className="absolute right-0 bg-white border shadow-md rounded mt-2 z-50">
       <button
         className="block px-4 py-2 w-full text-left hover:bg-gray-200"
         onClick={() => {
@@ -268,7 +268,9 @@ export default function ProductContent() {
               type="number"
               className="w-full p-2 border rounded mb-2"
               value={selectedProduct.price}
-              onChange={(e) => setSelectedProduct({ ...selectedProduct, price: e.target.value })}
+              onChange={(e) =>
+                setSelectedProduct({ ...selectedProduct, price: Number(e.target.value) })
+              }              
             />
             <div className="flex justify-end gap-2">
               <button className="px-4 py-2 bg-gray-500 text-white rounded" onClick={() => setIsEditModalOpen(false)}>Cancel</button>

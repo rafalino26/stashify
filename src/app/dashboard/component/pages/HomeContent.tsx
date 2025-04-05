@@ -1,50 +1,169 @@
 "use client";
 
-const HomeContent = () => {
-    return (
-        <div className="space-y-6">
-            {/* Baris 1 - 2 Card Lebar */}
-            <div className="grid grid-cols-2 gap-28">
-                {/* Card 1 */}
-                <div className="bg-white p-4 rounded-lg shadow-md ml-14 w-11/12 h-48">
-                    <h2 className="font-bold">Stock Update</h2>
-                    {/* Bisa tambah chart di sini */}
-                </div>
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+} from "recharts";
+import { useEffect, useState } from "react";
+import api from "@/app/services/api";
 
-                {/* Card 2 */}
-                <div className="bg-white p-4 rounded-lg shadow-md -ml-6 w-11/12 h-48">
-                    <h2 className="font-bold">Price Comparison</h2>
-                    {/* Bisa tambah tabel di sini */}
-                </div>
-            </div>
+type BarData = {
+    name: string;
+    masuk: number;
+    keluar: number;
+  };
+  
+  type PieData = {
+    name: string;
+    value: number;
+    color: string;
+  };
+  
+  export default function Dashboard() {
+    const [totalProducts, setTotalProducts] = useState(0);
+    const [lowStockCount, setLowStockCount] = useState(0);
+    const [barData, setBarData] = useState<BarData[]>([]);
+    const [pieData, setPieData] = useState<PieData[]>([]);
+  
 
-           {/* Baris 2 */}
-           <div className="grid grid-cols-3 ml-14 gap-32">
-                {/* Kolom Kiri - 2 Card Bersebelahan */}
-                <div className="col-span-1 grid grid-cols-2 gap-56">
-                    <div className="bg-white p-4 rounded-lg shadow-md w-72 h-96 flex-1">
-                        <h2 className="font-bold">Report</h2>
-                    </div>
-                    <div className="bg-white p-4 rounded-lg shadow-md ml-24 w-72 h-96 flex-1">
-                        <h2 className="font-bold">Inventory Summary</h2>
-                    </div>
-                </div>
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const response = await api.get("/dashboard", { withCredentials: true });
+        const data = response.data;
 
-                {/* Kolom Kanan - 3 Card Vertikal */}
-                <div className="col-span-2 flex flex-col ml-72 gap-6">
-                    <div className="bg-white p-4 rounded-lg shadow-md w-96 h-28">
-                        <h2 className="font-bold">Other Info 1</h2>
-                    </div>
-                    <div className="bg-white p-4 rounded-lg shadow-md w-96 h-28">
-                        <h2 className="font-bold">Other Info 2</h2>
-                    </div>
-                    <div className="bg-white p-4 rounded-lg shadow-md w-96 h-28">
-                        <h2 className="font-bold">Other Info 3</h2>
-                    </div>
-                </div>
-            </div>
+
+        // Set cards
+        setTotalProducts(data.totalProducts);
+        setLowStockCount(data.lowStockCount);
+
+        // Transform bar data
+        const bar = data.last7DaysMovements.map((item: any) => ({
+          name: item.period,
+          masuk: item.total_in,
+          keluar: item.total_out,
+        }));
+        setBarData(bar);
+
+        // Transform pie data
+        const pie = data.productTypeDistribution.map((item: any) => ({
+          name: item.product_type,
+          value: item.percentage,
+          color: getRandomColor(item.product_type), // assign consistent color
+        }));
+        setPieData(pie);
+      } catch (error) {
+        console.error("Failed to fetch dashboard data:", error);
+      }
+    };
+
+    fetchDashboardData();
+  }, []);
+
+  const getRandomColor = (name: string) => {
+    const colors: { [key: string]: string } = {
+      dairy: "#f97316",
+      candy: "#3b82f6",
+      electronics: "#8b5cf6",
+      accessories: "#b9ff39",
+      furniture: "#ec4899",
+      stationery: "#6b7280",
+    };
+    return colors[name] || "#" + Math.floor(Math.random() * 16777215).toString(16);
+  };
+
+  return (
+    <div className="p-6 space-y-6 text-black">
+      {/* Section: Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Card: Total Product */}
+        <div className="bg-white p-6 rounded-2xl shadow-md border">
+          <p className="text-sm text-gray-500">Total Products</p>
+          <p className="text-4xl font-bold">{totalProducts}</p>
+          <p className="text-sm text-gray-500 mt-1">Total number of products in inventory</p>
         </div>
-    );
-};
 
-export default HomeContent;
+        {/* Card: Low Stock */}
+        <div className="bg-white p-6 rounded-2xl shadow-md border">
+          <p className="text-sm text-gray-500">Low Stock</p>
+          <p className="text-4xl font-bold">{lowStockCount}</p>
+          <p className="text-sm text-gray-500 mt-1">Stock below minimum threshold</p>
+        </div>
+      </div>
+
+      {/* Section: Stock Movement Bar Chart */}
+      <div className="bg-white p-6 rounded-2xl shadow-md border">
+        <div className="mb-4">
+          <h2 className="text-xl font-bold">Stock Movement</h2>
+          <p className="text-sm text-gray-500">Total daily stock in and out movement</p>
+        </div>
+
+        <div className="w-full h-80">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={barData}>
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="masuk" fill="#b9ff39" name="Stock In" />
+              <Bar dataKey="keluar" fill="#f44336" name="Stock Out" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      {/* Section: Stock Distribution Pie Chart */}
+      <div className="bg-white p-6 rounded-2xl shadow-md border">
+        <div className="mb-4">
+          <h2 className="text-xl font-bold">Stock Distribution</h2>
+          <p className="text-sm text-gray-500">Comparison of stock quantity by product category</p>
+        </div>
+
+        <div className="w-full h-[400px] flex flex-col items-center">
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie
+                data={pieData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                innerRadius={70}
+                outerRadius={120}
+                label={({ name, percent }) =>
+                  `${name}: ${(percent * 100).toFixed(1)}%`
+                }
+              >
+                {pieData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+
+          {/* Legend */}
+          <div className="flex flex-wrap justify-center mt-4 space-x-4">
+            {pieData.map((entry, idx) => (
+              <div key={idx} className="flex items-center space-x-2">
+                <span
+                  className="w-3 h-3 rounded-full"
+                  style={{ backgroundColor: entry.color }}
+                ></span>
+                <span className="text-sm text-gray-700">{entry.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
