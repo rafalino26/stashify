@@ -9,9 +9,9 @@ const poppins = Poppins({ subsets: ["latin"], weight: ["400", "700"] });
 
 const menuItems = [
     { label: "Home", path: "/dashboard/home", icon: "/home.png", iconActive: "/home-black.png", tooltip: "Go to Home Page" },
+    { label: "Product", path: "/dashboard/product",  icon: "/stockentry.png", iconActive: "/stockentry-black.png", tooltip: "Manage your inventory here" },
     { label: "Inventory", path: "/dashboard/inventory", icon: "/inventory.png", iconActive: "/inventory-black.png", tooltip: "Manage your inventory here" },
-    { label: "Stock Entry", path: "/dashboard/stock-entry", icon: "/stockentry.png", iconActive: "/stockentry-black.png", tooltip: "Add new stock to your inventory" },
-    { label: "Stock Update", path: "/dashboard/stock-update", icon: "/stockupdate.png", iconActive: "/stockupdate-black.png", tooltip: "Update your stock data" },
+    { label: "Stock Update", path: "/dashboard/stock-entry", icon: "/stockupdate.png", iconActive: "/stockupdate-black.png", tooltip: "Add new stock to your inventory" },
     { label: "Market Price", path: "/dashboard/market-price", icon: "/marketprice.png", iconActive: "/marketprice-black.png", tooltip: "See latest market prices" },
     { label: "HPP", path: "/dashboard/hpp", icon: "/hpp.png", iconActive: "/hpp-black.png", tooltip: "Calculate product cost (HPP)" },
     { label: "Report", path: "/dashboard/report", icon: "/report.png", iconActive: "/report-black.png", tooltip: "View business reports" },

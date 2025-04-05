@@ -2,9 +2,9 @@
 
 import { useParams } from "next/navigation";
 import HomeContent from "@/app/dashboard/component/pages/HomeContent";
-import InventoryContent from "@/app/dashboard/component/pages/InventoryContent";
+import ProductContent from "./pages/ProductContent";
+import InventoryContent from "./pages/InventoryContent";
 import StockEntryContent from "@/app/dashboard/component/pages/StockEntryContent";
-import StockUpdateContent from "@/app/dashboard/component/pages/StockUpdateContent";
 import MarketPriceContent from "@/app/dashboard/component/pages/MarketPriceContent";
 import HPPContent from "@/app/dashboard/component/pages/HPPContent";
 import ReportContent from "@/app/dashboard/component/pages/ReportContent";
@@ -15,12 +15,12 @@ export default function ClientContent() {
 
     const renderContent = () => {
         switch (menu) {
+            case "product":
+                return <ProductContent/>;
             case "inventory":
                 return <InventoryContent />;
             case "stock-entry":
                 return <StockEntryContent />;
-            case "stock-update":
-                return <StockUpdateContent />;
             case "market-price":
                 return <MarketPriceContent />;
             case "hpp":
