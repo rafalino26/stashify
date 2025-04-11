@@ -14,7 +14,6 @@ const menuItems = [
     { label: "Stock Update", path: "/dashboard/stock-entry", icon: "/stockupdate.png", iconActive: "/stockupdate-black.png", tooltip: "Add new stock to your inventory" },
     { label: "Market Price", path: "/dashboard/market-price", icon: "/marketprice.png", iconActive: "/marketprice-black.png", tooltip: "See latest market prices" },
     { label: "HPP", path: "/dashboard/hpp", icon: "/hpp.png", iconActive: "/hpp-black.png", tooltip: "Calculate product cost (HPP)" },
-    { label: "Report", path: "/dashboard/report", icon: "/report.png", iconActive: "/report-black.png", tooltip: "View business reports" },
     { label: "About Us", path: "/dashboard/about-us", icon: "/aboutus.png", iconActive: "/aboutus-black.png", tooltip: "Learn more about us" }
 ];
 

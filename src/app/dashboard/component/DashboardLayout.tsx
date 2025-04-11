@@ -12,7 +12,8 @@ const pageTitles: Record<string, string> = {
   "/dashboard/market-price": "Market Price",
   "/dashboard/hpp": "HPP",
   "/dashboard/report": "Report",
-  "/dashboard/about-us": "About Us"
+  "/dashboard/about-us": "About Us",
+  "/dashboard/profile": "Edit Profile"
 };
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -66,7 +67,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-md w-48 py-2">
                   <button
-                    onClick={() => router.push("/profile")}
+                    onClick={() => router.push("/dashboard/profile")}
                     className="w-full text-left px-4 py-2 text-black hover:bg-gray-200"
                   >
                     See Profile
@@ -86,7 +87,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         {/* Modal Logout Confirmation */}
         {showLogoutModal && (
-          <div className="fixed top-0 left-0 right-0 flex justify-center items-start bg-transparent bg-opacity-50">
+          <div className="fixed top-0 left-0 right-0 flex justify-center items-start bg-transparent text-black bg-opacity-50">
             <div className="bg-white p-6 rounded-lg shadow-lg w-80">
               <h2 className="text-lg font-semibold text-center">Are you sure you want to logout?</h2>
               <div className="mt-4 flex justify-between">

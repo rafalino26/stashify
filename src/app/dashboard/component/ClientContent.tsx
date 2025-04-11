@@ -9,6 +9,7 @@ import MarketPriceContent from "@/app/dashboard/component/pages/MarketPriceConte
 import HPPContent from "@/app/dashboard/component/pages/HPPContent";
 import ReportContent from "@/app/dashboard/component/pages/ReportContent";
 import AboutUsContent from "@/app/dashboard/component/pages/AboutUsContent";
+import ProfileContent from "@/app/dashboard/component/pages/ProfileContent";
 
 export default function ClientContent() {
     const { menu } = useParams();
@@ -29,6 +30,8 @@ export default function ClientContent() {
                 return <ReportContent />;
             case "about-us":
                 return <AboutUsContent />;
+                case "profile":
+                    return <ProfileContent />;
             default:
                 return <HomeContent />;
         }
