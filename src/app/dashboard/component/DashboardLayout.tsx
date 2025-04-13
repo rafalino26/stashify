@@ -50,11 +50,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <header className="bg-white shadow p-4 flex justify-between items-center">
           <div className="text-xl text-black font-bold">{pageTitle}</div>
           <div className="flex items-center mr-6 space-x-4">
-            {/* Notification Icon */}
-            <div className="relative cursor-pointer">
-              <img src="/notification.png" alt="Notifications" className="w-6 h-6" />
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">3</span>
-            </div>
 
             {/* Profile Dropdown */}
             <div className="relative">
