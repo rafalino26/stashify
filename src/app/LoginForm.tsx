@@ -122,9 +122,14 @@ export default function LoginForm() {
           className="w-full h-[100vh] object-cover"
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <div className="w-28 h-28 bg-black rounded-full mb-4"></div>
-          <h1 className="text-4xl font-light text-white">S T A S H I F Y</h1>
-        </div>
+  <img
+    src="/logostashify.jpg"
+    alt="Logo Stashify"
+    className="w-28 h-28 rounded-full object-cover mb-4"
+  />
+  <h1 className="text-4xl font-light text-white">S T A S H I F Y</h1>
+</div>
+
       </div>
     </div>
   );

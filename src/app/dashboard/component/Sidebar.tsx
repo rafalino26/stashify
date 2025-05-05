@@ -40,9 +40,13 @@ export default function Sidebar() {
         <div className="w-64 min-h-screen bg-[#255367] text-white p-5 flex flex-col">
             {/* Wrapper flex untuk logo dan teks */}
             <div className="flex items-center space-x-3 mb-8">
-                <img src="/" alt="" className="w-8 h-8" />
-                <h2 className={`text-2xl font-semibold ${poppins.className}`}>STASHIFY</h2>
-            </div>
+  <img
+    src="/logostashify.jpg"
+    alt="Logo Stashify"
+    className="w-8 h-8 rounded-full object-cover"
+  />
+  <h2 className={`text-2xl font-semibold ${poppins.className}`}>STASHIFY</h2>
+</div>
 
             <ul className="space-y-2 flex-1 overflow-y-auto">
                 {menuItems.map((item) => {
