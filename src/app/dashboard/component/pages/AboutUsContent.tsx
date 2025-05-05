@@ -19,20 +19,19 @@ export default function AboutPage() {
       <div className="space-y-4 text-left bg-white rounded-2xl p-6">
         <h1 className="text-3xl font-bold text-gray-800">Tentang Stashify</h1>
         <p className="text-lg text-gray-700">
-          <strong>Stashify</strong> dimulai dari sebuah project mata kuliah <em>Perancangan SIA</em>
+        Stashify adalah platform pencatatan persediaan yang dikembangkan untuk membantu pelaku usaha dalam mengelola dan memantau stok barang secara akurat dan efisien. Kami menggunakan pendekatan metode Lower of Cost or Market (LCM) untuk memastikan bahwa nilai persediaan tercatat sesuai dengan prinsip akuntansi yang berlaku dan mencerminkan kondisi pasar terkini.
+        
         </p>
         <p className="text-lg text-gray-700">
-          <strong>Stashify ada karena torang ada, anjay😭</strong>
+        Dengan antarmuka yang intuitif dan fitur yang dirancang khusus untuk kebutuhan pelaku usaha kecil hingga menengah, Stashify hadir sebagai solusi yang andal untuk menjaga transparansi, mengurangi risiko kerugian, serta meningkatkan efisiensi dalam manajemen inventaris.
+
         </p>
-        <p className="text-md text-gray-600 italic">
-          But then out of the blue, a spark or two<br />
-          Seems to generate
+        <p className="text-lg text-gray-700">
+        Kami berkomitmen untuk memberikan layanan terbaik guna mendukung pertumbuhan dan keberlanjutan bisnis Anda melalui sistem pencatatan yang profesional, terstandarisasi, dan mudah digunakan.
+
         </p>
-        <p className="text-md text-gray-600 italic">
-          Now I'm bothering you, it's bothering me<br />
-          What can I do? What should I do?<br />
-          We're not too far, look where we are<br />
-          Bothering me, bothering you
+        <p className="text-lg text-gray-700">
+        Stashify - Mencatat persediaan secara tepat, mendukung keputusan bisnis yang lebih baik.
         </p>
       </div>
     </div>
